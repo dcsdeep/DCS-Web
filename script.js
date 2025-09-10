@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form validation
     initFormValidation();
     
+    // Newsletter form
+    initNewsletterForm();
+    
     // Animated counters
     initAnimatedCounters();
     
@@ -301,6 +304,136 @@ function showNotification(message, type = 'success') {
             document.body.removeChild(notification);
         }, 300);
     }, 5000);
+}
+
+// Newsletter Form Functionality
+function initNewsletterForm() {
+    const newsletterForm = document.getElementById('newsletter-form');
+    
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const newsletterData = {
+                name: formData.get('name'),
+                email: formData.get('email')
+            };
+            
+            // Validate newsletter form
+            if (validateNewsletterForm(newsletterData)) {
+                submitNewsletterForm(newsletterData);
+            }
+        });
+        
+        // Real-time validation for newsletter
+        const newsletterInputs = newsletterForm.querySelectorAll('input');
+        newsletterInputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                validateNewsletterField(this);
+            });
+            
+            input.addEventListener('input', function() {
+                clearNewsletterFieldError(this);
+            });
+        });
+    }
+}
+
+// Newsletter form validation
+function validateNewsletterForm(data) {
+    let isValid = true;
+    
+    // Name validation
+    if (!data.name || data.name.trim().length < 2) {
+        showNewsletterFieldError('newsletter-name', 'Please enter your name');
+        isValid = false;
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!data.email || !emailRegex.test(data.email)) {
+        showNewsletterFieldError('newsletter-email', 'Please enter a valid email address');
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+function validateNewsletterField(field) {
+    const value = field.value.trim();
+    
+    if (field.name === 'name' && value.length < 2) {
+        showNewsletterFieldError(field.id, 'Please enter your name');
+    } else if (field.name === 'email') {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            showNewsletterFieldError(field.id, 'Please enter a valid email address');
+        }
+    }
+}
+
+function showNewsletterFieldError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    const formGroup = field.closest('.form-group');
+    
+    // Remove existing error
+    const existingError = formGroup.querySelector('.error-message');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    // Add error styling
+    field.style.borderColor = '#ef4444';
+    
+    // Add error message
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.style.color = '#ef4444';
+    errorDiv.style.fontSize = '0.875rem';
+    errorDiv.style.marginTop = '0.25rem';
+    errorDiv.textContent = message;
+    
+    formGroup.appendChild(errorDiv);
+}
+
+function clearNewsletterFieldError(field) {
+    const formGroup = field.closest('.form-group');
+    const errorMessage = formGroup.querySelector('.error-message');
+    
+    if (errorMessage) {
+        errorMessage.remove();
+        field.style.borderColor = '';
+    }
+}
+
+function submitNewsletterForm(data) {
+    const submitButton = document.querySelector('#newsletter-form button[type="submit"]');
+    const originalText = submitButton.textContent;
+    
+    // Show loading state
+    submitButton.textContent = 'Subscribing...';
+    submitButton.disabled = true;
+    
+    // Simulate form submission (replace with actual API call)
+    setTimeout(() => {
+        showNotification('🎉 Welcome aboard! Check your email to confirm your subscription.', 'success');
+        
+        // Reset form
+        document.getElementById('newsletter-form').reset();
+        
+        // Reset button
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+        
+        // Track newsletter signup
+        trackEvent('Newsletter Signup', {
+            name: data.name,
+            email: data.email
+        });
+        
+        console.log('Newsletter subscription:', data);
+    }, 2000);
 }
 
 // Animated Counters

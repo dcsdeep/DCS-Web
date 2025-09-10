@@ -127,7 +127,7 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 4rem;
+    height: 5rem;
 }
 
 .nav-brand {
@@ -140,17 +140,32 @@ p {
     text-decoration: none;
 }
 
-.nav-brand img {
-    width: 32px;
-    height: 32px;
-}
+/* .nav-brand img {
+    width: ;
+    height: ;
+} */
 
 .logo-img {
-    height: 32px;
+    height: 48px;
     width: auto;
-    max-width: 100px;
+    max-width: 150px;
     object-fit: contain;
     filter: brightness(0) invert(1);
+    transition: var(--transition);
+}
+
+@media (max-width: 768px) {
+    .logo-img {
+        height: 40px;
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-img {
+        height: 36px;
+        max-width: 100px;
+    }
 }
 
 .nav-menu {
@@ -190,7 +205,7 @@ p {
     display: flex;
     align-items: center;
     background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-gray) 100%);
-    padding-top: 4rem;
+    padding-top: 5rem;
 }
 
 .hero-container {
@@ -748,6 +763,106 @@ p {
     color: var(--primary-blue);
 }
 
+/* Newsletter Section */
+.newsletter {
+    padding: var(--section-padding);
+    background-color: var(--white);
+    color: var(--dark-bg);
+}
+
+.newsletter-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.newsletter-text h2 {
+    color: var(--dark-bg);
+    margin-bottom: 1.5rem;
+    font-size: 2.25rem;
+}
+
+.newsletter-text p {
+    color: var(--medium-gray);
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.newsletter-benefits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--medium-gray);
+    font-weight: 500;
+}
+
+.benefit-icon {
+    font-size: 1.25rem;
+    width: 24px;
+    text-align: center;
+}
+
+.newsletter-form {
+    background-color: var(--dark-bg);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.newsletter-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.newsletter-form input {
+    width: 100%;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    color: var(--white);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.newsletter-form input:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.newsletter-form input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.newsletter-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.newsletter-disclaimer {
+    text-align: center;
+    margin: 0;
+}
+
+.newsletter-disclaimer small {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
 /* Contact Section */
 .contact {
     padding: var(--section-padding);
@@ -903,10 +1018,10 @@ p {
     
     .nav-menu {
         position: fixed;
-        top: 4rem;
+        top: 5rem;
         left: -100%;
         width: 100%;
-        height: calc(100vh - 4rem);
+        height: calc(100vh - 5rem);
         background-color: var(--dark-bg);
         flex-direction: column;
         justify-content: start;
@@ -956,9 +1071,15 @@ p {
     
     .process-content,
     .team-content,
-    .contact-content {
+    .contact-content,
+    .newsletter-content {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+    
+    .newsletter-benefits {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
     }
     
     .cta-banner {
@@ -1011,6 +1132,14 @@ p {
     
     .contact-form {
         padding: 1.5rem;
+    }
+    
+    .newsletter-form {
+        padding: 2rem;
+    }
+    
+    .newsletter-text h2 {
+        font-size: 2rem;
     }
 }
 
